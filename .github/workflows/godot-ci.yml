@@ -36,6 +36,7 @@ jobs:
           ./butler -V
       - name: itch
         run: |
+          butler login
           butler push ./build/windows $ITCHIO_USERNAME/$ITCHIO_GAME:windows
 
   export-linux:
@@ -68,6 +69,7 @@ jobs:
           ./butler -V
       - name: itch
         run: |
+          butler login
           butler push ./build/linux $ITCHIO_USERNAME/$ITCHIO_GAME:linux
 
   export-web:
@@ -130,4 +132,5 @@ jobs:
           ./butler -V
       - name: itch
         run: |
+          butler login
           butler push ./build/mac $ITCHIO_USERNAME/$ITCHIO_GAME:mac
