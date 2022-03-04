@@ -36,7 +36,6 @@ jobs:
           ./butler -V
       - name: itch
         run: |
-          butler login
           butler push ./build/windows $ITCHIO_USERNAME/$ITCHIO_GAME:windows
 
   export-linux:
