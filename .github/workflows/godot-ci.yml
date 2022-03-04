@@ -15,9 +15,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Test
-        run: |
-        cwd ..
-        ls
+        run: cd ..
+        run: ls
       # - name: Setup
       #   run: |
       #     mkdir -v -p ~/.local/share/godot/templates
