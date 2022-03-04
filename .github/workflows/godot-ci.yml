@@ -30,7 +30,7 @@ jobs:
       - name: Install butler
         run: |
           apt-get update && apt-get install -y butler
-      - name: itch.io
+      - name: itch
       - run: |
           butler push ./build/windows $ITCHIO_USERNAME/$ITCHIO_GAME:windows
 
@@ -58,7 +58,7 @@ jobs:
       - name: Install butler
         run: |
           apt-get update && apt-get install -y butler
-      - name: itch.io
+      - name: itch
         run: |
           butler push ./build/linux $ITCHIO_USERNAME/$ITCHIO_GAME:linux
 
@@ -116,6 +116,6 @@ jobs:
       - name: Install butler
         run: |
           apt-get update && apt-get install -y butler
-      - name: itch.io
+      - name: itch
         run: |
           butler push ./build/mac $ITCHIO_USERNAME/$ITCHIO_GAME:mac
