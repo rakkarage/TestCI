@@ -29,6 +29,7 @@ jobs:
           path: build/windows
       - name: Install butler
         run: |
+          apt-get update && apt-get install -y curl
           curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
           unzip butler.zip
           chmod +x butler
@@ -60,6 +61,7 @@ jobs:
           path: build/linux
       - name: Install butler
         run: |
+          apt-get update && apt-get install -y curl
           curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
           unzip butler.zip
           chmod +x butler
@@ -121,6 +123,7 @@ jobs:
           path: build/mac
       - name: Install butler
         run: |
+          apt-get update && apt-get install -y curl
           curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
           unzip butler.zip
           chmod +x butler
