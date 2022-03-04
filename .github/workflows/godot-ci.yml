@@ -66,11 +66,8 @@ jobs:
         run: |
           mkdir -v -p build/web
           godot -v --export "HTML5" build/web/index.html
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: web
-          path: build/web
+      - name: check
+          ls build/web
       - name: Install rsync 📚
         run: |
           apt-get update && apt-get install -y rsync
@@ -79,6 +76,11 @@ jobs:
         with:
           branch: gh-pages # The branch the action should deploy to.
           folder: build/web # The folder the action should deploy.
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: web
+          path: build/web
 
   export-mac:
     name: Mac Export
