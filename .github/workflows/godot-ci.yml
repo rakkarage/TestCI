@@ -66,7 +66,9 @@ jobs:
         run: |
           mkdir -v -p build/web
           godot -v --export "HTML5" build/web/index.html
-      - name: check
+      - name: check0
+          run: ls
+      - name: check1
           run: ls build/web
       - name: Install rsync 📚
         run: |
