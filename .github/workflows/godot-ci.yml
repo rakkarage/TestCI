@@ -32,7 +32,7 @@ jobs:
           apt-get update && apt-get install -y butler
       - name: itch.io
       - run: |
-        butler push ./build/windows $ITCHIO_USERNAME/$ITCHIO_GAME:windows
+          butler push ./build/windows $ITCHIO_USERNAME/$ITCHIO_GAME:windows
 
   export-linux:
     name: Linux Export
