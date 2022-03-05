@@ -4,5 +4,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: mathieudutour/github-tag-action@v6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       - uses: dawidd6/action-download-artifact@v2.17.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       - uses: ncipollo/release-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
