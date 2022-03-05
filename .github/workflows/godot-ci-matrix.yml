@@ -19,11 +19,11 @@ jobs:
           - channel: windows
             type: "Windows Desktop"
           - channel: linux
-            type: "Linux/X11"
+            type: Linux/X11
           - channel: mac
             type: "Mac OSX"
           - channel: web
-            type: "HTML5"
+            type: HTML5
     steps:
       - uses: actions/checkout@v2
       - run: |
