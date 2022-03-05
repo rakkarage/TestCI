@@ -4,6 +4,8 @@ on: [push, workflow_dispatch]
 env:
   GODOT_VERSION: 3.3.4
   EXPORT_NAME: TestCI
+  ITCHIO_GAME: testci
+  ITCHIO_USERNAME: henrysoftware
 
 jobs:
   export-windows:
@@ -37,8 +39,6 @@ jobs:
       - name: itch
         env:
           BUTLER_API_KEY: ${{secrets.BUTLER_API_KEY}}
-          ITCHIO_USERNAME: ${{secrets.ITCHIO_USERNAME}}
-          ITCHIO_GAME: ${{secrets.ITCHIO_GAME}}
         run: |
           butler login
           butler push ./build/windows $ITCHIO_USERNAME/$ITCHIO_GAME:windows
