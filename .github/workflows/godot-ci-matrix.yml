@@ -27,8 +27,12 @@ jobs:
           - channel: web
             type: "HTML5"
     steps:
+      - name: CheckA
+        run: pwd
       - name: Checkout
         uses: actions/checkout@v2
+      - name: CheckB
+        run: pwd
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/templates
@@ -50,5 +54,4 @@ jobs:
           chmod +x butler
           ./butler -V
       - name: Butler
-        run: |
-          butler push ./build/${{ matrix.channel }} $ITCHIO_USERNAME/$ITCHIO_GAME:${{ matrix.channel }}
+        run: butler push ./build/${{ matrix.channel }} $ITCHIO_USERNAME/$ITCHIO_GAME:${{ matrix.channel }}
