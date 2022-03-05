@@ -3,4 +3,6 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
+      - uses: mathieudutour/github-tag-action@v6.0
+      - uses: dawidd6/action-download-artifact@v2.17.0
       - uses: ncipollo/release-action@v1
