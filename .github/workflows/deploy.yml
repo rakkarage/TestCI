@@ -30,8 +30,7 @@ jobs:
             file: index
             ext: html
     steps:
-      - name: checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
       - name: export
         run: |
           mkdir -v -p ~/.local/share/godot/templates
@@ -47,8 +46,7 @@ jobs:
         with:
           branch: gh-pages
           folder: ./build/${{ matrix.channel }}
-      - name: upload
-        uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v1
         with:
           name: ${{ matrix.channel }}
           path: ./build/${{ matrix.channel }}
