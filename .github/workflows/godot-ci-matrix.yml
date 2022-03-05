@@ -37,11 +37,6 @@ jobs:
         run: |
           mkdir -v -p ./build/${{ matrix.channel }}
           godot -v --export "${{ matrix.type }}" ./build/${{ matrix.channel }}/$EXPORT_NAME.exe
-      - name: Upload ${{ matrix.channel }}
-        uses: actions/upload-artifact@v1
-        with:
-          name: ${{ matrix.channel }}
-          path: ./build/${{ matrix.channel }}
       - name: Setup Butler ${{ matrix.channel }}
         run: |
           apt-get update && apt-get install -y curl
@@ -51,3 +46,8 @@ jobs:
           ./butler -V
       - name: Butler ${{ matrix.channel }}
         run: butler push ./build/${{ matrix.channel }} $ITCHIO_USERNAME/$ITCHIO_GAME:${{ matrix.channel }}
+      - name: Upload ${{ matrix.channel }}
+        uses: actions/upload-artifact@v1
+        with:
+          name: ${{ matrix.channel }}
+          path: ./build/${{ matrix.channel }}
