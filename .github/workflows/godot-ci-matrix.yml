@@ -36,7 +36,7 @@ jobs:
       - name: Export ${{ matrix.channel }}
         run: |
           mkdir -v -p ./build/${{ matrix.channel }}
-          godot -v --export "${{ matrix.type }}" ./build/${{ matrix.channel }}/$EXPORT_NAME.exe
+          godot -v --export ${{ matrix.type }} ./build/${{ matrix.channel }}/$EXPORT_NAME.exe
       - name: Setup Butler ${{ matrix.channel }}
         run: |
           apt-get update && apt-get install -y curl
