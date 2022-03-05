@@ -1,0 +1,54 @@
+name: Deploy
+on: [push, workflow_dispatch]
+
+env:
+  GODOT_VERSION: 3.3.4
+  EXPORT_NAME: TestCI
+  ITCHIO_GAME: testci
+  ITCHIO_USERNAME: henrysoftware
+  BUTLER_API_KEY: ${{secrets.BUTLER_API_KEY}}
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:3.3.4
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - channel: windows
+            type: "Windows Desktop"
+          - channel: linux
+            type: "Linux/X11"
+          - channel: mac
+            type: "Mac OSX"
+          - channel: web
+            type: HTML5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/templates
+          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
+      - name: Export
+        run: |
+          mkdir -v -p build/${{ matrix.channel }}
+          godot -v --export ${{ matrix.type }} build/${{ matrix.channel }}/$EXPORT_NAME.exe
+      - name: Upload
+        uses: actions/upload-artifact@v1
+        with:
+          name: ${{ matrix.channel }}
+          path: build/${{ matrix.channel }}
+      - name: Setup Butler
+        run: |
+          apt-get update && apt-get install -y curl
+          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
+          unzip butler.zip
+          chmod +x butler
+          ./butler -V
+      - name: Butler
+        run: |
+          butler push ./build/${{ matrix.channel }} $ITCHIO_USERNAME/$ITCHIO_GAME:${{ matrix.channel }}
