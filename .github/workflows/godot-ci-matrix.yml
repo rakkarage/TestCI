@@ -10,7 +10,7 @@ env:
 
 jobs:
   deploy:
-    name: Deploy Matrix
+    name: Deploy
     runs-on: ubuntu-latest
     container:
       image: barichello/godot-ci:3.3.4
@@ -27,33 +27,27 @@ jobs:
           - channel: web
             type: "HTML5"
     steps:
-      - name: Checkout
+      - name: Checkout ${{ matrix.channel }}
         uses: actions/checkout@v2
-      - name: Setup
+      - name: Setup ${{ matrix.channel }}
         run: |
           mkdir -v -p ~/.local/share/godot/templates
           mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
-      - name: CheckType
-        run: echo "${{ matrix.type }}"
-      - name: Export
+      - name: Export ${{ matrix.channel }}
         run: |
           mkdir -v -p ./build/${{ matrix.channel }}
           godot -v --export "${{ matrix.type }}" ./build/${{ matrix.channel }}/$EXPORT_NAME.exe
-      - name: CheckUpload
-        run: ls ./build/${{ matrix.channel }}
-      - name: Upload
+      - name: Upload ${{ matrix.channel }}
         uses: actions/upload-artifact@v1
         with:
           name: ${{ matrix.channel }}
           path: ./build/${{ matrix.channel }}
-      - name: Setup Butler
+      - name: Setup Butler ${{ matrix.channel }}
         run: |
           apt-get update && apt-get install -y curl
           curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
           unzip butler.zip
           chmod +x butler
           ./butler -V
-      - name: CheckButler
-        run: ls ./build/${{ matrix.channel }}
-      - name: Butler
+      - name: Butler ${{ matrix.channel }}
         run: butler push ./build/${{ matrix.channel }} $ITCHIO_USERNAME/$ITCHIO_GAME:${{ matrix.channel }}
