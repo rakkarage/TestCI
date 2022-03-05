@@ -2,7 +2,6 @@ on: [push, workflow_dispatch]
 
 env:
   GODOT_VERSION: 3.3.4
-  EXPORT_NAME: TestCI
   ITCHIO_GAME: testci
   ITCHIO_USERNAME: henrysoftware
   BUTLER_API_KEY: ${{secrets.BUTLER_API_KEY}}
@@ -19,12 +18,15 @@ jobs:
           - channel: windows
             type: "Windows Desktop"
             ext: exe
+            EXPORT_NAME: TestCI
           - channel: linux
             type: Linux/X11
             ext: x86_64
+            EXPORT_NAME: TestCI
           - channel: mac
             type: "Mac OSX"
             ext: zip
+            EXPORT_NAME: TestCI
           - channel: web
             type: HTML5
             ext: html
@@ -38,6 +40,7 @@ jobs:
           TYPE: ${{ matrix.type }}
           CHANNEL: ${{ matrix.channel }}
           EXT: ${{ matrix.ext }}
+          EXPORT_NAME: ${{ matrix.EXPORT_NAME }}
         run: |
           mkdir -v -p ./build/$CHANNEL
           godot -v --export "$TYPE" ./build/$CHANNEL/$EXPORT_NAME.$EXT
