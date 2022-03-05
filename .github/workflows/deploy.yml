@@ -31,24 +31,24 @@ jobs:
             ext: html
     steps:
       - uses: actions/checkout@v2
-      - run: |
+      - name: export
+        run: |
           mkdir -v -p ~/.local/share/godot/templates
           mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
-      - run: |
           mkdir -v -p ./build/${{ matrix.channel }}
           godot -v --export "${{ matrix.type }}" ./build/${{ matrix.channel }}/${{ matrix.name }}.${{ matrix.ext }}
       - if: ${{ matrix.channel == 'web'}}
         run: apt-get update && apt-get install -y rsync
-      - if: ${{ matrix.channel == 'web'}}
         uses: JamesIves/github-pages-deploy-action@releases/v4
         with:
           branch: gh-pages
-          folder: build/${{ matrix.channel }}
+          folder: ./build/${{ matrix.channel }}
       - uses: actions/upload-artifact@v1
         with:
           name: ${{ matrix.channel }}
           path: ./build/${{ matrix.channel }}
-      - run: |
+      - name: butler
+        run: |
           apt-get update && apt-get install -y curl
           curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
           unzip butler.zip
