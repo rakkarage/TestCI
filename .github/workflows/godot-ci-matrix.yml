@@ -28,6 +28,7 @@ jobs:
           - channel: web
             type: HTML5
             ext: html
+            EXPORT_NAME: index
     steps:
       - uses: actions/checkout@v2
       - run: |
@@ -37,7 +38,6 @@ jobs:
           TYPE: ${{ matrix.type }}
           CHANNEL: ${{ matrix.channel }}
           EXT: ${{ matrix.ext }}
-          EXPORT_NAME: index
         run: |
           mkdir -v -p ./build/$CHANNEL
           godot -v --export "$TYPE" ./build/$CHANNEL/$EXPORT_NAME.$EXT
