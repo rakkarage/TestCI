@@ -38,12 +38,12 @@ jobs:
           mkdir -v -p ./build/${{ matrix.channel }}
           godot -v --export "${{ matrix.type }}" ./build/${{ matrix.channel }}/${{ matrix.name }}.${{ matrix.ext }}
       - run: apt-get update && apt-get install -y rsync
-        if: ${{ matrix.channel == web}}
+        if: ${{ matrix.channel == 'web'}}
       - uses: JamesIves/github-pages-deploy-action@releases/v4
         with:
           branch: gh-pages
           folder: build/web
-        if: ${{ matrix.channel == web}}
+        if: ${{ matrix.channel == `web`}}
       - uses: actions/upload-artifact@v1
         with:
           name: ${{ matrix.channel }}
