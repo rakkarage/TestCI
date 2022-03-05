@@ -143,4 +143,4 @@ jobs:
           ./butler -V
       - name: itch
         run: |
-          butler push ./build/mac $ITCHIO_USERNAME/$ITCHIO_GAME:html
+          butler push ./build/web $ITCHIO_USERNAME/$ITCHIO_GAME:html
