@@ -6,6 +6,7 @@ env:
   EXPORT_NAME: TestCI
   ITCHIO_GAME: testci
   ITCHIO_USERNAME: henrysoftware
+  BUTLER_API_KEY: ${{secrets.BUTLER_API_KEY}}
 
 jobs:
   export-windows:
@@ -37,104 +38,109 @@ jobs:
           chmod +x butler
           ./butler -V
       - name: itch
-        env:
-          BUTLER_API_KEY: ${{secrets.BUTLER_API_KEY}}
         run: |
-          butler login
           butler push ./build/windows $ITCHIO_USERNAME/$ITCHIO_GAME:windows
 
-  # export-linux:
-  #   name: Linux Export
-  #   runs-on: ubuntu-latest
-  #   container:
-  #     image: barichello/godot-ci:3.3.4
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
-  #     - name: Setup
-  #       run: |
-  #         mkdir -v -p ~/.local/share/godot/templates
-  #         mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
-  #     - name: Linux Build
-  #       run: |
-  #         mkdir -v -p build/linux
-  #         godot -v --export "Linux/X11" build/linux/$EXPORT_NAME.x86_64
-  #     - name: Upload Artifact
-  #       uses: actions/upload-artifact@v1
-  #       with:
-  #         name: linux
-  #         path: build/linux
-  #     - name: Install butler
-  #       run: |
-  #         apt-get update && apt-get install -y curl
-  #         curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
-  #         unzip butler.zip
-  #         chmod +x butler
-  #         ./butler -V
-  #     - name: itch
-  #       run: |
-  #         butler login
-  #         butler push ./build/linux $ITCHIO_USERNAME/$ITCHIO_GAME:linux
+  export-linux:
+    name: Linux Export
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:3.3.4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/templates
+          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
+      - name: Linux Build
+        run: |
+          mkdir -v -p build/linux
+          godot -v --export "Linux/X11" build/linux/$EXPORT_NAME.x86_64
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: linux
+          path: build/linux
+      - name: Install butler
+        run: |
+          apt-get update && apt-get install -y curl
+          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
+          unzip butler.zip
+          chmod +x butler
+          ./butler -V
+      - name: itch
+        run: |
+          butler push ./build/linux $ITCHIO_USERNAME/$ITCHIO_GAME:linux
 
-  # export-web:
-  #   name: Web Export
-  #   runs-on: ubuntu-latest
-  #   container:
-  #     image: barichello/godot-ci:3.3.4
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
-  #     - name: Setup
-  #       run: |
-  #         mkdir -v -p ~/.local/share/godot/templates
-  #         mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
-  #     - name: Web Build
-  #       run: |
-  #         mkdir -v -p build/web
-  #         godot -v --export "HTML5" build/web/index.html
-  #     - name: Install rsync 📚
-  #       run: |
-  #         apt-get update && apt-get install -y rsync
-  #     - name: Deploy to GitHub Pages 🚀
-  #       uses: JamesIves/github-pages-deploy-action@releases/v4
-  #       with:
-  #         branch: gh-pages # The branch the action should deploy to.
-  #         folder: build/web # The folder the action should deploy.
-  #     - name: Upload Artifact
-  #       uses: actions/upload-artifact@v1
-  #       with:
-  #         name: web
-  #         path: build/web
+  export-mac:
+    name: Mac Export
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:3.3.4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/templates
+          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
+      - name: Mac Build
+        run: |
+          mkdir -v -p build/mac
+          godot -v --export "Mac OSX" build/mac/$EXPORT_NAME.zip
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: mac
+          path: build/mac
+      - name: Install butler
+        run: |
+          apt-get update && apt-get install -y curl
+          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
+          unzip butler.zip
+          chmod +x butler
+          ./butler -V
+      - name: itch
+        run: |
+          butler push ./build/mac $ITCHIO_USERNAME/$ITCHIO_GAME:mac
 
-  # export-mac:
-  #   name: Mac Export
-  #   runs-on: ubuntu-latest
-  #   container:
-  #     image: barichello/godot-ci:3.3.4
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
-  #     - name: Setup
-  #       run: |
-  #         mkdir -v -p ~/.local/share/godot/templates
-  #         mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
-  #     - name: Mac Build
-  #       run: |
-  #         mkdir -v -p build/mac
-  #         godot -v --export "Mac OSX" build/mac/$EXPORT_NAME.zip
-  #     - name: Upload Artifact
-  #       uses: actions/upload-artifact@v1
-  #       with:
-  #         name: mac
-  #         path: build/mac
-  #     - name: Install butler
-  #       run: |
-  #         apt-get update && apt-get install -y curl
-  #         curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
-  #         unzip butler.zip
-  #         chmod +x butler
-  #         ./butler -V
-  #     - name: itch
-  #       run: |
-  #         butler login
-  #         butler push ./build/mac $ITCHIO_USERNAME/$ITCHIO_GAME:mac
+  export-web:
+    name: Web Export
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:3.3.4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/templates
+          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
+      - name: Web Build
+        run: |
+          mkdir -v -p build/web
+          godot -v --export "HTML5" build/web/index.html
+      - name: Install rsync 📚
+        run: |
+          apt-get update && apt-get install -y rsync
+      - name: Deploy to GitHub Pages 🚀
+        uses: JamesIves/github-pages-deploy-action@releases/v4
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: build/web # The folder the action should deploy.
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: web
+          path: build/web
+      - name: Install butler
+        run: |
+          apt-get update && apt-get install -y curl
+          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
+          unzip butler.zip
+          chmod +x butler
+          ./butler -V
+      - name: itch
+        run: |
+          butler push ./build/mac $ITCHIO_USERNAME/$ITCHIO_GAME:html
