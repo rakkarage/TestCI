@@ -25,7 +25,7 @@ jobs:
           - channel: mac
             type: "Mac OSX"
           - channel: web
-            type: HTML5
+            type: "HTML5"
     steps:
       - name: Checkout
         uses: actions/checkout@v2

@@ -1,4 +1,4 @@
-name: Deploy
+name: "godot-ci export"
 on: [push, workflow_dispatch]
 
 env:
@@ -9,8 +9,8 @@ env:
   BUTLER_API_KEY: ${{secrets.BUTLER_API_KEY}}
 
 jobs:
-  deploy-windows:
-    name: Deploy Windows
+  export-windows:
+    name: Windows Export
     runs-on: ubuntu-latest
     container:
       image: barichello/godot-ci:3.3.4
@@ -41,8 +41,8 @@ jobs:
         run: |
           butler push ./build/windows $ITCHIO_USERNAME/$ITCHIO_GAME:windows
 
-  deploy-linux:
-    name: Deploy Linux
+  export-linux:
+    name: Linux Export
     runs-on: ubuntu-latest
     container:
       image: barichello/godot-ci:3.3.4
@@ -73,8 +73,8 @@ jobs:
         run: |
           butler push ./build/linux $ITCHIO_USERNAME/$ITCHIO_GAME:linux
 
-  deploy-mac:
-    name: Deploy Mac
+  export-mac:
+    name: Mac Export
     runs-on: ubuntu-latest
     container:
       image: barichello/godot-ci:3.3.4
@@ -105,8 +105,8 @@ jobs:
         run: |
           butler push ./build/mac $ITCHIO_USERNAME/$ITCHIO_GAME:mac
 
-  deploy-web:
-    name: Deploy Web
+  export-web:
+    name: Web Export
     runs-on: ubuntu-latest
     container:
       image: barichello/godot-ci:3.3.4
