@@ -35,13 +35,13 @@ jobs:
           mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
       - name: Export
         run: |
-          mkdir -v -p build/${{ matrix.channel }}
-          godot -v --export "${{ matrix.type }}" build/${{ matrix.channel }}/$EXPORT_NAME.exe
+          mkdir -v -p ./build/${{ matrix.channel }}
+          godot -v --export "${{ matrix.type }}" ./build/${{ matrix.channel }}/$EXPORT_NAME.exe
       - name: Upload
         uses: actions/upload-artifact@v1
         with:
           name: ${{ matrix.channel }}
-          path: build/${{ matrix.channel }}
+          path: ./build/${{ matrix.channel }}
       - name: Setup Butler
         run: |
           apt-get update && apt-get install -y curl
