@@ -27,12 +27,8 @@ jobs:
           - channel: web
             type: "HTML5"
     steps:
-      - name: CheckA
-        run: pwd
       - name: Checkout
         uses: actions/checkout@v2
-      - name: CheckB
-        run: pwd
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/templates
@@ -41,6 +37,8 @@ jobs:
         run: |
           mkdir -v -p ./build/${{ matrix.channel }}
           godot -v --export "${{ matrix.type }}" ./build/${{ matrix.channel }}/$EXPORT_NAME.exe
+      - name: CheckUpload
+        run: ls ./build/${{ matrix.channel }}
       - name: Upload
         uses: actions/upload-artifact@v1
         with:
@@ -53,5 +51,7 @@ jobs:
           unzip butler.zip
           chmod +x butler
           ./butler -V
+      - name: CheckButler
+        run: ls ./build/${{ matrix.channel }}
       - name: Butler
         run: butler push ./build/${{ matrix.channel }} $ITCHIO_USERNAME/$ITCHIO_GAME:${{ matrix.channel }}
