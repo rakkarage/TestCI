@@ -12,4 +12,4 @@ jobs:
           workflow: deploy.yml
       - uses: ncipollo/release-action@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
