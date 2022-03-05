@@ -9,6 +9,7 @@ jobs:
       - uses: dawidd6/action-download-artifact@v2.17.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: deploy.yml
       - uses: ncipollo/release-action@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
