@@ -1,3 +1,4 @@
+id: deploy
 on: [push]
 env:
   GODOT_VERSION: 3.3.4
