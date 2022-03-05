@@ -36,7 +36,7 @@ jobs:
       - name: Export
         run: |
           mkdir -v -p build/${{ matrix.channel }}
-          godot -v --export ${{ matrix.type }} build/${{ matrix.channel }}/$EXPORT_NAME.exe
+          godot -v --export "${{ matrix.type }}" build/${{ matrix.channel }}/$EXPORT_NAME.exe
       - name: Upload
         uses: actions/upload-artifact@v1
         with:
