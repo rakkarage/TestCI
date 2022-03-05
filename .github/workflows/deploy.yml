@@ -37,8 +37,11 @@ jobs:
           mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
           mkdir -v -p ./build/${{ matrix.channel }}
           godot -v --export "${{ matrix.type }}" ./build/${{ matrix.channel }}/${{ matrix.name }}.${{ matrix.ext }}
-      - if: ${{ matrix.channel == 'web'}}
+      - name: rsync
+        if: ${{ matrix.channel == 'web'}}
         run: apt-get update && apt-get install -y rsync
+      - name: gh-pages
+        if: ${{ matrix.channel == 'web'}}
         uses: JamesIves/github-pages-deploy-action@releases/v4
         with:
           branch: gh-pages
