@@ -35,8 +35,8 @@ jobs:
           chmod +x butler
           ./butler -V
       - name: itch
-        env:
-          BUTLER_API_KEY: $BUTLER_API_KEY
+        with:
+          BUTLER_API_KEY: ${{secrets.BUTLER_API_KEY}}
         run: |
           butler login
           butler push ./build/windows $ITCHIO_USERNAME/$ITCHIO_GAME:windows
