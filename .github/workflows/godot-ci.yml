@@ -19,17 +19,17 @@ jobs:
       matrix:
         channel:
           - windows
-            env:
-              type: "Windows Desktop"
+            include:
+              - type: "Windows Desktop"
           - linux
-            env:
-              type: "Linux/X11"
+            include:
+              - type: "Linux/X11"
           - mac
-            env:
-              type: "Mac OSX"
+            include:
+              - type: "Mac OSX"
           - web
-            env:
-              type: HTML5
+            include:
+              - type: HTML5
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -40,7 +40,7 @@ jobs:
       - name: Export
         run: |
           mkdir -v -p build/${{ matrix.channel }}
-          godot -v --export $type build/${{ matrix.channel }}/$EXPORT_NAME.exe
+          godot -v --export ${{ matrix.type }} build/${{ matrix.channel }}/$EXPORT_NAME.exe
       - name: Upload
         uses: actions/upload-artifact@v1
         with:
