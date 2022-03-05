@@ -33,10 +33,14 @@ jobs:
         run: |
           mkdir -v -p ~/.local/share/godot/templates
           mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
+      - name: CheckType ${{ matrix.channel }}
+        run: echo "${{ matrix.type }}"
       - name: Export ${{ matrix.channel }}
         run: |
           mkdir -v -p ./build/${{ matrix.channel }}
           godot -v --export "${{ matrix.type }}" ./build/${{ matrix.channel }}/$EXPORT_NAME.exe
+      - name: CheckButler ${{ matrix.channel }}
+        run: ls ./build/${{ matrix.channel }}
       - name: Setup Butler ${{ matrix.channel }}
         run: |
           apt-get update && apt-get install -y curl
@@ -46,6 +50,8 @@ jobs:
           ./butler -V
       - name: Butler ${{ matrix.channel }}
         run: butler push ./build/${{ matrix.channel }} $ITCHIO_USERNAME/$ITCHIO_GAME:${{ matrix.channel }}
+      - name: CheckUpload ${{ matrix.channel }}
+        run: ls ./build/${{ matrix.channel }}
       - name: Upload ${{ matrix.channel }}
         uses: actions/upload-artifact@v1
         with:
