@@ -10,7 +10,6 @@ jobs:
     container:
       image: barichello/godot-ci:3.3.4
     strategy:
-      fail-fast: true
       matrix:
         include:
           - channel: windows
