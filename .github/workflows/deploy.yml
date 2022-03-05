@@ -15,28 +15,29 @@ jobs:
         include:
           - channel: windows
             type: "Windows Desktop"
-            name: TestCI
+            file: TestCI
             ext: exe
           - channel: linux
             type: Linux/X11
-            name: TestCI
+            file: TestCI
             ext: x86_64
           - channel: mac
             type: "Mac OSX"
-            name: TestCI
+            file: TestCI
             ext: zip
           - channel: web
             type: HTML5
-            name: index
+            file: index
             ext: html
     steps:
-      - uses: actions/checkout@v2
+      - name: checkout
+        uses: actions/checkout@v2
       - name: export
         run: |
           mkdir -v -p ~/.local/share/godot/templates
           mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
           mkdir -v -p ./build/${{ matrix.channel }}
-          godot -v --export "${{ matrix.type }}" ./build/${{ matrix.channel }}/${{ matrix.name }}.${{ matrix.ext }}
+          godot -v --export "${{ matrix.type }}" ./build/${{ matrix.channel }}/${{ matrix.file }}.${{ matrix.ext }}
       - name: rsync
         if: ${{ matrix.channel == 'web'}}
         run: apt-get update && apt-get install -y rsync
@@ -46,7 +47,8 @@ jobs:
         with:
           branch: gh-pages
           folder: ./build/${{ matrix.channel }}
-      - uses: actions/upload-artifact@v1
+      - name: upload
+        uses: actions/upload-artifact@v1
         with:
           name: ${{ matrix.channel }}
           path: ./build/${{ matrix.channel }}
