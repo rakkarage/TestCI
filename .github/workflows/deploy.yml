@@ -37,9 +37,9 @@ jobs:
       - run: |
           mkdir -v -p ./build/${{ matrix.channel }}
           godot -v --export "${{ matrix.type }}" ./build/${{ matrix.channel }}/${{ matrix.name }}.${{ matrix.ext }}
-      - if: ${{ matrix.channel == "web"}}
+      - if: ${{ matrix.channel == 'web'}}
         run: apt-get update && apt-get install -y rsync
-      - if: ${{ matrix.channel == "web"}}
+      - if: ${{ matrix.channel == 'web'}}
         uses: JamesIves/github-pages-deploy-action@releases/v4
         with:
           branch: gh-pages
