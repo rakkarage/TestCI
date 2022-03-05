@@ -33,6 +33,8 @@ jobs:
         run: |
           mkdir -v -p ~/.local/share/godot/templates
           mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
+      - name: CheckType
+        run: echo ${{ matrix.channel }}
       - name: Export
         run: |
           mkdir -v -p ./build/${{ matrix.channel }}
