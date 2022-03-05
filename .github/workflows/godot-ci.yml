@@ -17,19 +17,15 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        channel:
-          - windows
-            include:
-              - type: "Windows Desktop"
-          - linux
-            include:
-              - type: "Linux/X11"
-          - mac
-            include:
-              - type: "Mac OSX"
-          - web
-            include:
-              - type: HTML5
+        include:
+          - channel: windows
+            type: "Windows Desktop"
+          - channel: linux
+            type: "Linux/X11"
+          - channel: mac
+            type: "Mac OSX"
+          - channel: web
+            type: HTML5
     steps:
       - name: Checkout
         uses: actions/checkout@v2
