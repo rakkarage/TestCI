@@ -20,7 +20,7 @@ jobs:
           - linux
           - mac
           - web
-    name: Deploy ${{ matrix.template }}
+    name: Deploy ${{ matrix.channel }}
     runs-on: ubuntu-latest
     container:
       image: barichello/godot-ci:3.3.4
