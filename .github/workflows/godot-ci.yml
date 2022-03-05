@@ -10,7 +10,7 @@ env:
 
 jobs:
   deploy:
-    name: Deploy ${{ matrix.channel }}
+    name: Deploy
     runs-on: ubuntu-latest
     container:
       image: barichello/godot-ci:3.3.4
