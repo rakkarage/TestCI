@@ -14,7 +14,7 @@ jobs:
       matrix:
         include:
           - channel: windows
-            type: "Windows Desktop"
+            type: Windows Desktop
             file: TestCI
             ext: exe
           - channel: linux
@@ -22,7 +22,7 @@ jobs:
             file: TestCI
             ext: x86_64
           - channel: mac
-            type: "Mac OSX"
+            type: Mac OSX
             file: TestCI
             ext: zip
           - channel: web
