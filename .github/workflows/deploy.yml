@@ -34,31 +34,17 @@ jobs:
       - run: |
           mkdir -v -p ~/.local/share/godot/templates
           mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
-      - env:
-          TYPE: ${{ matrix.type }}
-          CHANNEL: ${{ matrix.channel }}
-          EXT: ${{ matrix.ext }}
-          NAME: ${{ matrix.name }}
-        run: |
-          mkdir -v -p ./build/$CHANNEL
-          godot -v --export "$TYPE" ./build/$CHANNEL/$NAME.$EXT
-      - run: ls ./build/$CHANNEL
+      - run: |
+          mkdir -v -p ./build/${{ matrix.channel }}
+          godot -v --export "${{ matrix.type }}" ./build/${{ matrix.channel }}/${{ matrix.name }}.${{ matrix.ext }}
       - uses: actions/upload-artifact@v1
         with:
           name: ${{ matrix.channel }}
           path: ./build/${{ matrix.channel }}
-      - env:
-          TYPE: ${{ matrix.type }}
-          CHANNEL: ${{ matrix.channel }}
-        run: |
-          ls ./build/${{ matrix.channel }}
-          ls ./build/$CHANNEL
       - run: |
           apt-get update && apt-get install -y curl
           curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
           unzip butler.zip
           chmod +x butler
           ./butler -V
-      - env:
-          CHANNEL: ${{ matrix.channel }}
-        run: butler push ./build/$CHANNEL $ITCHIO_USERNAME/$ITCHIO_GAME:${{ matrix.channel }}
+          ./butler push ./build${{ matrix.channel }} $ITCHIO_USERNAME/$ITCHIO_GAME:${{ matrix.channel }}
