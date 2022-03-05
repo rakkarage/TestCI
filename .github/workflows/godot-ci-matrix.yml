@@ -39,6 +39,7 @@ jobs:
         env:
           TYPE: ${{ matrix.type }}
         run: |
+          echo "$TYPE"
           mkdir -v -p ./build/${{ matrix.channel }}
           godot -v --export "$TYPE" ./build/${{ matrix.channel }}/$EXPORT_NAME.exe
       - name: CheckUpload ${{ matrix.channel }}
