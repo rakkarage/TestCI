@@ -47,4 +47,4 @@ jobs:
           unzip butler.zip
           chmod +x butler
           ./butler -V
-          ./butler push ./build${{ matrix.channel }} $ITCHIO_USERNAME/$ITCHIO_GAME:${{ matrix.channel }}
+          ./butler push ./build/${{ matrix.channel }} $ITCHIO_USERNAME/$ITCHIO_GAME:${{ matrix.channel }}
