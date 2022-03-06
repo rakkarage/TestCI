@@ -73,4 +73,3 @@ jobs:
       - name: butler source
         if: ${{matrix.channel == 'web'}}
         run: ./butler push source/ ${ITCHIO_USERNAME}/${ITCHIO_GAME}:source
-
