@@ -38,7 +38,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: source.zip
-          path: .
+          path: ./
       - name: export
         run: |
           mkdir -v -p ~/.local/share/godot/templates
