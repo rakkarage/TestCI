@@ -71,7 +71,7 @@ jobs:
           name: source.zip
       - name: Display structure of downloaded files
         run: ls -R
-        working-directory: path/to/artifact
+        working-directory: ./
       - name: source upload
         if: ${{ matrix.channel == 'web'}}
         run: ./butler push source.zip ${ITCHIO_USERNAME}/${ITCHIO_GAME}:source
