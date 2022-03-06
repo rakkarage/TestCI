@@ -51,6 +51,10 @@ jobs:
         with:
           name: ${{ matrix.channel }}
           path: ./build/${{ matrix.channel }}
+      - uses: softprops/action-gh-release@v1
+          if: startsWith(github.ref, 'refs/tags/')
+          with:
+            files: ./build/${{ matrix.channel }}
       - name: butler
         run: |
           apt-get update && apt-get install -y curl
