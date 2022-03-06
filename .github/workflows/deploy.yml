@@ -68,7 +68,7 @@ jobs:
       - if: ${{ matrix.channel == 'web'}}
         uses: actions/download-artifact@v3
         with:
-          name: source
+          name: source.zip
       - name: source upload
         if: ${{ matrix.channel == 'web'}}
         run: ./butler push source.zip ${ITCHIO_USERNAME}/${ITCHIO_GAME}:source
