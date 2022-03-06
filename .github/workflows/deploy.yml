@@ -32,6 +32,8 @@ jobs:
             ext: html
     steps:
       - uses: actions/checkout@v2
+        with:
+          submodules: true
       - name: export
         run: |
           mkdir -v -p ~/.local/share/godot/templates
