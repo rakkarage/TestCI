@@ -65,7 +65,10 @@ jobs:
           unzip butler.zip
           chmod +x butler
           ./butler push ./build/${{ matrix.channel }} ${ITCHIO_USERNAME}/${ITCHIO_GAME}:${{ matrix.channel }}
-      - name: source
+      - uses: actions/download-artifact@v3
+        with:
+          name: source.zip
+      - name: source upload
         if: ${{ matrix.channel == 'web'}}
         run: ./butler push source.zip ${ITCHIO_USERNAME}/${ITCHIO_GAME}:source
 
