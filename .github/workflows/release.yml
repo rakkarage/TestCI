@@ -17,4 +17,3 @@ jobs:
       - uses: ncipollo/release-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ secrets.GITHUB_REF }}
