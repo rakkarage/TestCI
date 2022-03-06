@@ -71,5 +71,7 @@ jobs:
           name: source.zip
       - name: source upload
         if: ${{ matrix.channel == 'web'}}
-        run: ./butler push source.zip ${ITCHIO_USERNAME}/${ITCHIO_GAME}:source
+        run: |
+          ls
+          ./butler push source.zip ${ITCHIO_USERNAME}/${ITCHIO_GAME}:source
 
