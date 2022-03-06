@@ -37,7 +37,7 @@ jobs:
         if: ${{ matrix.channel == 'web'}}
         uses: actions/upload-artifact@v1
         with:
-          name: source.zip
+          name: source
           path: ./
       - name: export
         run: |
@@ -68,11 +68,12 @@ jobs:
       - if: ${{ matrix.channel == 'web'}}
         uses: actions/download-artifact@v3
         with:
-          name: source.zip
+          name: source
+          path: source/
       - name: Display structure of downloaded files
         run: ls -R
         working-directory: ./
       - name: source upload
         if: ${{ matrix.channel == 'web'}}
-        run: ./butler push source.zip ${ITCHIO_USERNAME}/${ITCHIO_GAME}:source
+        run: ./butler push source/ ${ITCHIO_USERNAME}/${ITCHIO_GAME}:source
 
