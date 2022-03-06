@@ -1,19 +1,20 @@
 on:
-  push:
-    tags:
-      - '*'
+  workflow_dispatch:
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
       - uses: mathieudutour/github-tag-action@v6.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: dawidd6/action-download-artifact@v2.17.0
+      - id: tag_version
+        uses: dawidd6/action-download-artifact@v2.17.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           workflow: deploy.yml
+          workflow_conclusion: success
       - uses: ncipollo/release-action@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ steps.tag_version.outputs.new_tag }}
+          name: Release ${{ steps.tag_version.outputs.new_tag }}
+          body: ${{ steps.tag_version.outputs.changelog }}
