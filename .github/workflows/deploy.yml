@@ -69,9 +69,10 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: source.zip
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: path/to/artifact
       - name: source upload
         if: ${{ matrix.channel == 'web'}}
-        run: |
-          ls
-          ./butler push source.zip ${ITCHIO_USERNAME}/${ITCHIO_GAME}:source
+        run: ./butler push source.zip ${ITCHIO_USERNAME}/${ITCHIO_GAME}:source
 
