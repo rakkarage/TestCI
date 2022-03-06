@@ -39,6 +39,11 @@ jobs:
         with:
           name: source
           path: ./
+      - if: ${{ matrix.channel == 'web'}}
+        uses: actions/download-artifact@v3
+        with:
+          name: source
+          path: source/
       - name: export
         run: |
           mkdir -v -p ~/.local/share/godot/templates
@@ -65,15 +70,7 @@ jobs:
           unzip butler.zip
           chmod +x butler
           ./butler push ./build/${{ matrix.channel }} ${ITCHIO_USERNAME}/${ITCHIO_GAME}:${{ matrix.channel }}
-      - if: ${{ matrix.channel == 'web'}}
-        uses: actions/download-artifact@v3
-        with:
-          name: source
-          path: source/
-      - name: Display structure of downloaded files
-        run: ls -R
-        working-directory: ./
-      - name: source upload
+      - name: butler source
         if: ${{ matrix.channel == 'web'}}
         run: ./butler push source/ ${ITCHIO_USERNAME}/${ITCHIO_GAME}:source
 
